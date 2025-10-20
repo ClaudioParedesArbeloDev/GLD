@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
+import logo from '../../../public/logoGLD.png';
 import './navbar.css';
 
 
@@ -17,7 +18,7 @@ const Navbar = () => {
   return (
     <header className="headerNav">
       <div className="logoNav">
-        <h2>GLD</h2>
+        <img src= {logo} alt="logo LGD" />
         <p>importaciones</p>
       </div>
       <nav>

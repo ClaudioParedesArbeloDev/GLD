@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Whatsapp from '../../components/whatsapp/whatsapp';
-
 import './home.css';
 
 function Home() {
@@ -35,18 +33,17 @@ function Home() {
     return (
         <div>
             <div className="products-container">
-        <h1>Productos</h1>
-        <ul>
-            {products.map((product) => (
-                <li key={product.id} className="product-item">
-                    <h2>{product.name}</h2>
-                    <p>Precio: ${product.price}</p>
-                    <p>{product.description}</p>
-                </li>
-            ))}
-        </ul>
-        </div>
-            <Whatsapp />
+                <h1>Productos</h1>
+                    <ul>
+                        {products.map((product) => (
+                        <li key={product.id} className="product-item">
+                            <h2>{product.name}</h2>
+                            <p>Precio: ${product.price}</p>
+                            <p>{product.description}</p>
+                        </li>
+                        ))}
+                    </ul>
+            </div>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 .footerHome{
-    background: #b4c0d6;
+    background: #c2cbda;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -10,52 +10,80 @@
     color: #212222;
 }
     
-.socialMedia{
-    ul {
-        position: relative;
-        display: flex;
-    }
-    ul li {
-        position: relative;
-        list-style: none;
-        margin: 0 20px;
-        cursor: pointer;
-    }
-    ul li a {
-        text-decoration: none;
-    }
-    ul li a .fa-brands {
-        font-size: 2em;
-        color: #222;
-    }
-    ul li a::before {
-        font-family: "FontAwesome";
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 2em;
-        height: 0;
-        overflow: hidden;
-        transition: 0.5s ease-in-out;
-    }
 
-    ul li:nth-child(1) a::before {
-        content: "\f16d";
-        background-image: linear-gradient(45deg, 
-          #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,
-          #bc1888 100%);
-        -webkit-background-clip: text;
-         -webkit-text-fill-color: transparent;
-        border-bottom: 4px solid #dc2743;
-    }
-    ul li:nth-child(2) a::before {
-        content: "\e07b";
-        color: #8d55bb;
-        border-bottom: 4px solid #8d55bb;
-    }
-    
-    
-    ul li:hover a::before {
-        height: 100%;
-    }
+.card {
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  gap: 20px;
+}
+
+
+.socialContainer {
+  width: 52px;
+  height: 52px;
+  background-color: #2f0dc5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  border-radius: 30px;
+}
+
+.containerOne:hover {
+  background-color: #d62976;
+  transition-duration: 0.3s;
+  transform: scale(1.2);
+}
+
+.containerTwo:hover {
+  background-color: #00acee;
+  transition-duration: 0.3s;
+  transform: scale(1.2);
+}
+
+.containerThree:hover {
+  background-color: #0072b1;
+  transition-duration: 0.3s;
+  transform: scale(1.2);
+}
+
+.containerFour:hover {
+  background-color: #128c7e;
+  transition-duration: 0.3s;
+  transform: scale(1.2);
+}
+
+.socialContainer:active {
+  transform: scale(0.9);
+  transition-duration: 0.3s;
+}
+
+.socialSvg {
+  width: 17px;
+}
+
+.socialSvg path {
+  fill: rgb(255, 255, 255);
+}
+
+.socialContainer:hover .socialSvg {
+  animation: slide-in-top 0.3s both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

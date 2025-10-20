@@ -16,23 +16,21 @@ body{
 .headerNav{
     display: flex;
     justify-content: space-around;
-    background: #b4c0d6;
+    background: #c2cbda;
     color: #212222;
     align-items: center;
     padding: 20px;
 }
 
 .logoNav{
-    h2{
-        font-family: 'archivo-black', sans-serif;
-        font-size: 2.5rem;
-        font-weight: 600;
-        letter-spacing: 10px;
-        margin: 0;
+    img{
+        width: 150px;
     }
     p{
+        text-align: center;
         font-family: 'montserrat', sans-serif;
-        font-size: .8em;
+        font-size: 1em;
+
     }
 }
 
@@ -40,8 +38,7 @@ body{
 nav{
     height: 6rem;
     width: 70vw;
-    background-color: #b4c0d6;
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
+    background-color: #c2cbda;
     display: flex;
 }
 
@@ -62,7 +59,7 @@ nav{
     color: #212222;
 }
 .nav-links li a:hover {
-    color: #7c1f80;
+    color: #2f0dc5;
 }
 .nav-links li {
     position: relative;
@@ -73,7 +70,7 @@ nav{
     height: 3px;
     width: 0;
     bottom: -4px;
-    background-color: #7c1f80;
+    background-color: #2f0dc5;
     position: absolute;
     left: 0; 
     transition: width ease-in-out 250ms; 
@@ -81,8 +78,6 @@ nav{
 .nav-links li a:hover::before{
     width: 100%;
 }
-
-
 
 .hamburger div{
     width: 30px;
@@ -96,7 +91,7 @@ nav{
 }
 
 .cart:hover{
-    color: #7c1f80;
+    color: #2f0dc5;
 }
 
 
@@ -117,8 +112,8 @@ nav{
     }
     .nav-links{
         position: fixed;
-        background: #b4c0d6;
-        height: 90vh;
+        background: #c2cbda;
+        height: 70vh;
         width: 100%;
         flex-direction: column;
         clip-path: circle(50px at 90% -20%);
