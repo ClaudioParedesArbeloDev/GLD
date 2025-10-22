@@ -1,19 +1,18 @@
-.footerHome {
-  background: #c2cbda;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 40px 0;
+.footerHome{
+    background: #c2cbda;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 0;
 }
 
-.titleEnterprise {
-  color: #212222;
+.titleEnterprise{
+    color: #212222;
 }
+    
 
 .card {
-  width: -moz-fit-content;
   width: fit-content;
-  height: -moz-fit-content;
   height: fit-content;
   background-color: transparent;
   display: flex;
@@ -22,6 +21,7 @@
   padding: 15px;
   gap: 20px;
 }
+
 
 .socialContainer {
   width: 52px;
@@ -81,8 +81,9 @@
     transform: translateY(-50px);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
   }
-}/*# sourceMappingURL=footer.css.map */
+}
