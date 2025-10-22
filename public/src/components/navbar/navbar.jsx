@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-import logo from '../../../public/logoGLD.png';
+import logo from '/logoGLD.png';
 import './navbar.css';
 
 
 
 const Navbar = () => {
-  // Estado para controlar si el menú hamburguesa está abierto
+  
   const [isOpen, setIsOpen] = useState(false);
 
-  // Función para alternar el estado del menú
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
