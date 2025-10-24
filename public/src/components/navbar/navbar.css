@@ -5,7 +5,7 @@
   padding: 0;
   font-family: "montserrat", sans-serif;
   letter-spacing: 1px;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 body {
@@ -15,8 +15,8 @@ body {
 .headerNav {
   display: flex;
   justify-content: space-around;
-  background: #96acb7;
-  color: #2e4057;
+  background: #b4b2b2;
+  color: #0D1821;
   align-items: center;
   padding: 20px;
 }
@@ -50,11 +50,11 @@ nav {
   text-decoration: none;
   margin: 0 0.7vw;
   position: relative;
-  color: #2e4057;
+  color: #0D1821;
 }
 
 .nav-links li a:hover {
-  color: #1f0d72;
+  color: #31588d;
   font-size: 1.2em;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -70,7 +70,7 @@ nav {
   height: 3px;
   width: 0;
   bottom: -4px;
-  background-color: #160853;
+  background-color: #31588d;
   position: absolute;
   left: 0;
   transition: width ease-in-out 250ms;
@@ -83,7 +83,7 @@ nav {
 .hamburger div {
   width: 30px;
   height: 3px;
-  background: #1569a1;
+  background: #31588d;
   margin: 5px;
   transition: all 0.3s ease;
 }
@@ -93,7 +93,7 @@ nav {
 }
 
 .cart:hover {
-  color: #1f0d72;
+  color: #31588d;
   font-size: 1.8em;
   font-weight: 400;
   transition: all 0.3s ease;
@@ -116,8 +116,8 @@ nav {
   }
   .nav-links {
     position: fixed;
-    background: #c2cbda;
-    height: 70vh;
+    background: #b4b2b2;
+    height: 100vh;
     width: 100%;
     flex-direction: column;
     clip-path: circle(50px at 90% -20%);

@@ -10,6 +10,7 @@ import Home from './pages/home/home.jsx'
 import Products from './pages/products/products.jsx'
 import Services from './pages/services/services.jsx'
 import Contact from './pages/contact/contact.jsx'
+import Admin from './pages/admin/admin.jsx' 
 
 //Styles
 import './style.css'
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/products" element={<Products />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </BrowserRouter>

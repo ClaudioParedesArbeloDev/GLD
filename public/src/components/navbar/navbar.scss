@@ -1,13 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-
+@import '../colors/colors.scss';
 
 *{
     margin: 0;
     padding: 0;
-    font-family: 'montserrat', sans-serif;
+    font-family: $font-one;
     letter-spacing: 1px;
-    font-weight: 300;
+    font-weight: 500;
 }
 body{
     overflow-x: hidden;
@@ -16,8 +14,8 @@ body{
 .headerNav{
     display: flex;
     justify-content: space-around;
-    background: #96acb7;
-    color: #2e4057;
+    background: $background-color;
+    color: $text-color;
     align-items: center;
     padding: 20px;
 }
@@ -28,9 +26,8 @@ body{
     }
     p{
         text-align: center;
-        font-family: 'montserrat', sans-serif;
+        font-family: $font-one;
         font-size: 1em;
-
     }
 }
 
@@ -55,10 +52,10 @@ nav{
     text-decoration: none;
     margin: 0 0.7vw;
     position: relative;
-    color: #2e4057;
+    color: $text-color;
 }
 .nav-links li a:hover {
-    color: #1f0d72;
+    color: $primary-color;
     font-size: 1.2em;
     font-weight: 600;
     transition: all 0.3s ease;
@@ -72,7 +69,7 @@ nav{
     height: 3px;
     width: 0;
     bottom: -4px;
-    background-color: #160853;
+    background-color: $primary-color;
     position: absolute;
     left: 0; 
     transition: width ease-in-out 250ms; 
@@ -84,7 +81,7 @@ nav{
 .hamburger div{
     width: 30px;
     height:3px;
-    background: #1569a1;
+    background: $primary-color;
     margin: 5px;
     transition: all 0.3s ease;
 }
@@ -93,7 +90,7 @@ nav{
 }
 
 .cart:hover{
-    color: #1f0d72;
+    color: $primary-color;
     font-size: 1.8em;
     font-weight: 400;
     transition: all 0.3s ease;
@@ -117,8 +114,8 @@ nav{
     }
     .nav-links{
         position: fixed;
-        background: #c2cbda;
-        height: 70vh;
+        background: $background-color;
+        height: 100vh;
         width: 100%;
         flex-direction: column;
         clip-path: circle(50px at 90% -20%);

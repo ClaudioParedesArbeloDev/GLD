@@ -1,0 +1,1 @@
+export const CurrentURL = "http://localhost:8080/api/";

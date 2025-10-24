@@ -2,7 +2,7 @@ import './products.css'
 
 function Products() {
     return (
-        <div>
+        <div className='wrapperProducts'>
             <h1>Productos</h1>
         </div>
     )

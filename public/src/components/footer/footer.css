@@ -1,13 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 .footerHome {
-  background: #c2cbda;
+  background: #b4b2b2;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 40px 0;
+  padding: 20px 0;
 }
 
 .titleEnterprise {
-  color: #212222;
+  color: #0D1821;
+  font-family: "montserrat", sans-serif;
 }
 
 .card {
@@ -26,7 +29,7 @@
 .socialContainer {
   width: 52px;
   height: 52px;
-  background-color: #2e4057;
+  background-color: #31588d;
   display: flex;
   align-items: center;
   justify-content: center;

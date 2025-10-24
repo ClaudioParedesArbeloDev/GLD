@@ -1,13 +1,16 @@
+@import '../colors/colors.scss';
+
 .footerHome{
-    background: #c2cbda;
+    background: $background-color;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 40px 0;
+    padding: 20px 0;
 }
 
 .titleEnterprise{
-    color: #212222;
+    color: $text-color;
+    font-family: $font-one;
 }
     
 
@@ -26,7 +29,7 @@
 .socialContainer {
   width: 52px;
   height: 52px;
-  background-color: #2e4057;
+  background-color: $primary-color;
   display: flex;
   align-items: center;
   justify-content: center;
