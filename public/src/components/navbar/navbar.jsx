@@ -19,7 +19,11 @@ const Navbar = () => {
     <header className="headerNav">
       <div className="logoNav">
         <img src= {logo} alt="logo LGD" />
-        <p>importaciones</p>
+        <div className="titleEnterprise">
+          <p>division</p>
+          <span>importaciones</span>
+        </div>
+        
       </div>
       <nav>
         <div className={`hamburger ${isOpen ? 'toggle' : ''}`} onClick={toggleMenu} role="button" aria-label="Toggle menu">
@@ -30,11 +34,6 @@ const Navbar = () => {
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
           <li className={isOpen ? 'fade' : ''}>
             <Link to="/" onClick={toggleMenu}>Inicio</Link>
-          </li>
-          <li className={isOpen ? 'fade' : ''}>
-            <Link to="/products" onClick={toggleMenu}>
-              Productos
-            </Link>
           </li>
           <li className={isOpen ? 'fade' : ''}>
             <Link to="/services" onClick={toggleMenu}>

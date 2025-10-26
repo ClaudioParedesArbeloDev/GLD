@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 .footerHome {
-  background: #b4b2b2;
+  background: #f8f9fb;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -9,7 +9,7 @@
 }
 
 .titleEnterprise {
-  color: #0D1821;
+  color: #1a2a44;
   font-family: "montserrat", sans-serif;
 }
 
@@ -29,7 +29,7 @@
 .socialContainer {
   width: 52px;
   height: 52px;
-  background-color: #31588d;
+  background-color: #2b6cb0;
   display: flex;
   align-items: center;
   justify-content: center;
