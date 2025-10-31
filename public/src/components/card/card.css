@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 .product-card {
-  background: white;
+  background: #f8f9fb;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -17,7 +19,7 @@
 .card-image {
   height: 200px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #f8f9fb;
 }
 
 .card-image img {
@@ -50,7 +52,7 @@
   margin: 0 0 8px;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: #1a2a44;
 }
 
 .product-price {

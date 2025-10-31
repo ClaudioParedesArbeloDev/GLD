@@ -1,0 +1,17 @@
+
+
+  return (
+    <header className="headerNav">
+      
+
+      <Link to="/cart" className="cart-container" aria-label="Ver carrito">
+        <img src={cart} alt="carrito" />
+        {cartCount > 0 && (
+          <span className="cart-badge">{cartCount}</span>
+        )}
+      </Link>
+    </header>
+  );
+};
+
+export default Navbar;

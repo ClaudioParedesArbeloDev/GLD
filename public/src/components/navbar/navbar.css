@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 * {
@@ -16,42 +17,14 @@ body {
 
 .headerNav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background: #f8f9fb;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
-}
-
-.logoNav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-}
-
-.logoNav img {
-  width: 120px;
-  height: auto;
-}
-
-.titleEnterprise {
-  text-align: center;
-}
-.titleEnterprise p {
-  font-weight: 500;
-  font-size: 0.8rem;
-  letter-spacing: 10px;
-  color: #1a2a44;
-}
-.titleEnterprise span {
-  font-weight: 500;
-  font-size: 0.8rem;
-  letter-spacing: 4px;
-  color: #1a2a44;
+  padding: 1rem 2rem;
 }
 
 nav {
@@ -68,14 +41,12 @@ nav {
   font-weight: 500;
   letter-spacing: 0.5px;
 }
-
 .nav-links li a {
   text-decoration: none;
   color: #1a2a44;
   position: relative;
   transition: all 0.3s ease;
 }
-
 .nav-links li a::before {
   content: "";
   position: absolute;
@@ -87,39 +58,100 @@ nav {
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
-
-.nav-links li a:hover,
-.nav-links li a:focus-visible {
+.nav-links li a:hover, .nav-links li a:focus-visible {
   color: #2b6cb0;
   transform: translateY(-2px);
 }
-
-.nav-links li a:hover::before {
+.nav-links li a:hover::before, .nav-links li a:focus-visible::before {
   width: 100%;
 }
-
 .nav-links li a:focus-visible {
   outline: 2px solid #2b6cb0;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-.cart {
-  font-size: 1.5rem;
+.logoNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+.logoNav img {
+  width: 120px;
+  height: auto;
+}
+.logoNav .titleEnterprise {
+  text-align: center;
+}
+.logoNav .titleEnterprise p {
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 10px;
+  color: #1a2a44;
+}
+.logoNav .titleEnterprise span {
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: #1a2a44;
+}
+
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+.cart-link:hover {
+  transform: translateY(-2px);
+}
+.cart-link .cart-icon {
+  width: 28px;
+  height: 28px;
+  color: #1a2a44;
   transition: all 0.3s ease;
 }
-
-.cart:hover {
+.cart-link .cart-icon:hover {
   color: #2b6cb0;
-  transform: scale(1.2) translateY(-2px);
+  transform: scale(1.1);
+}
+.cart-link .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #2b6cb0;
+  color: #f8f9fb;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #f8f9fb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  animation: pulse 1.5s infinite;
 }
 
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
 .hamburger {
   display: none;
   cursor: pointer;
   z-index: 1000;
 }
-
 .hamburger div {
   width: 30px;
   height: 3px;
@@ -129,8 +161,11 @@ nav {
   border-radius: 2px;
 }
 
-/* Responsive */
 @media screen and (max-width: 800px) {
+  .headerNav {
+    padding: 1rem;
+    position: relative;
+  }
   .hamburger {
     display: block;
     position: absolute;
@@ -153,8 +188,6 @@ nav {
     transition: all 1s ease-out;
     pointer-events: none;
     overflow: hidden;
-    padding: 0;
-    margin: 0;
   }
   .nav-links.open {
     clip-path: circle(1000px at 90% -10%);
@@ -180,7 +213,7 @@ nav {
   .nav-links li:nth-child(5) {
     transition: all 0.5s ease 1s;
   }
-  li.fade {
+  .nav-links li.fade {
     opacity: 1;
     transform: translateY(0);
   }
@@ -193,15 +226,25 @@ nav {
   .toggle .line3 {
     transform: rotate(45deg) translate(-5px, -6px);
   }
-  .cart {
+  /* Carrito en móvil */
+  .cart-link {
     position: absolute;
-    top: 40%;
-    right: 130px;
+    top: 50%;
+    right: 80px;
+    transform: translateY(-50%);
+  }
+  .cart-link .cart-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .cart-link .cart-count {
+    top: -10px;
+    right: -8px;
+    font-size: 0.7rem;
+    min-width: 20px;
+    height: 20px;
   }
   .titleEnterprise {
     display: none;
-  }
-  .headerNav {
-    padding: 20px;
   }
 }/*# sourceMappingURL=navbar.css.map */

@@ -1,5 +1,7 @@
+@import '../../components/colors/colors.scss';
+
 .product-card {
-  background: white;
+  background: $background-color;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -17,7 +19,7 @@
 .card-image {
   height: 200px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: $background-color;
 }
 
 .card-image img {
@@ -49,7 +51,7 @@
   margin: 0 0 8px;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: $text-color;
 }
 
 .product-price {

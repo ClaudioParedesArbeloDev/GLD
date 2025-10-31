@@ -1,57 +1,42 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 
 import logo from '/logoGLD.png';
+import cartIcon from '../../assets/cart.svg';
+
 import './navbar.css';
 
-
-
 const Navbar = () => {
-  
   const [isOpen, setIsOpen] = useState(false);
+  const { cartCount } = useCart();
 
-  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <header className="headerNav">
-      <div className="logoNav">
-        <img src= {logo} alt="logo LGD" />
+    
+      <Link to="/" className="logoNav">
+        <img src={logo} alt="logo LGD" />
         <div className="titleEnterprise">
           <p>division</p>
           <span>importaciones</span>
         </div>
-        
-      </div>
-      <nav>
-        <div className={`hamburger ${isOpen ? 'toggle' : ''}`} onClick={toggleMenu} role="button" aria-label="Toggle menu">
-          <div className="line1"></div>
-          <div className="line2"></div>
-          <div className="line3"></div>
-        </div>
-        <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-          <li className={isOpen ? 'fade' : ''}>
-            <Link to="/" onClick={toggleMenu}>Inicio</Link>
-          </li>
-          <li className={isOpen ? 'fade' : ''}>
-            <Link to="/services" onClick={toggleMenu}>
-              Servicios
-            </Link>
-          </li>
-          <li className={isOpen ? 'fade' : ''}>
-            <Link to="/contact" onClick={toggleMenu}>
-              Contacto
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <div>
-        <span className="material-symbols-outlined cart" role="button" aria-label="Carrito de compras">
-          shopping_cart
-        </span>
-      </div>
+      </Link>
+
+      
+      
+
+      
+      <Link to="/cart" className="cart-link">
+        <img src={cartIcon} alt="carrito" className="cart-icon" />
+        {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+      </Link>
+
+      
+     
     </header>
   );
 };

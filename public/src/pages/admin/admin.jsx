@@ -1,13 +1,20 @@
+// src/pages/admin/admin.jsx
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CurrentURL } from '../../api/url.js';
 
 import './admin.css';
 
-import { CurrentURL } from '../../api/url.js';
-
 function Admin() {
-  // Estado para el formulario de productos
-  const [formData, setFormData] = useState({
+  const [activeTab, setActiveTab] = useState('create-category');
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  
+  const [categoryForm, setCategoryForm] = useState({ name: '' });
+  const [productForm, setProductForm] = useState({
     category_id: '',
     name: '',
     description: '',
@@ -17,286 +24,297 @@ function Admin() {
     images: [''],
     videos: [''],
   });
-  // Estado para el formulario de categorías
-  const [categoryForm, setCategoryForm] = useState({ name: '' });
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [editingProduct, setEditingProduct] = useState(null);
 
-  // Obtener categorías al cargar el componente
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${CurrentURL}categories`);
-        setCategories(response.data);
-        console.log(categories)
-      } catch (err) {
-        setError('Error al obtener las categorías: ' + (err.response?.data?.message || err.message));
-      }
-    };
     fetchCategories();
-  }, []);
+    if (activeTab === 'view-products') fetchProducts();
+  }, [activeTab]);
 
-  // Manejar cambios en los inputs del formulario de productos
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Manejar cambios en el formulario de categorías
-  const handleCategoryInputChange = (e) => {
-    setCategoryForm({ ...categoryForm, name: e.target.value });
-  };
-
-  // Manejar cambios en los inputs de URLs (imágenes y videos)
-  const handleUrlChange = (index, type, value) => {
-    const updatedArray = [...formData[type]];
-    updatedArray[index] = value;
-    setFormData({ ...formData, [type]: updatedArray });
-  };
-
-  // Agregar un nuevo campo de URL
-  const addUrlField = (type) => {
-    setFormData({ ...formData, [type]: [...formData[type], ''] });
-  };
-
-  // Eliminar un campo de URL
-  const removeUrlField = (index, type) => {
-    const updatedArray = formData[type].filter((_, i) => i !== index);
-    setFormData({ ...formData, [type]: updatedArray });
-  };
-
-  // Manejar el envío del formulario de productos
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
-
-    if (!formData.category_id || !formData.name || !formData.price || !formData.stock) {
-      setError('Por favor, completa todos los campos obligatorios');
-      return;
-    }
-
+  const fetchCategories = async () => {
     try {
-      const data = {
-        category_id: parseInt(formData.category_id),
-        name: formData.name,
-        description: formData.description,
-        price: parseFloat(formData.price),
-        stock: parseInt(formData.stock),
-        status: formData.status,
-        images: formData.images
-          .map((url, index) => ({ url, position: index, alt_text: `Imagen ${index + 1}` }))
-          .filter((img) => img.url),
-        videos: formData.videos
-          .map((url, index) => ({ url, position: index }))
-          .filter((vid) => vid.url),
-      };
-
-      const response = await axios.post(`${CurrentURL}products`, data, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      setSuccess('¡Producto agregado exitosamente!');
-      setFormData({
-        category_id: '',
-        name: '',
-        description: '',
-        price: '',
-        stock: '',
-        status: 'active',
-        images: [''],
-        videos: [''],
-      });
+      const res = await axios.get(`${CurrentURL}categories`);
+      setCategories(res.data);
     } catch (err) {
-      setError('Error al agregar el producto: ' + (err.response?.data?.message || err.message));
+      setError('Error al cargar categorías');
     }
   };
 
-  // Manejar el envío del formulario de categorías
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get(`${CurrentURL}products`);
+      setProducts(res.data);
+    } catch (err) {
+      setError('Error al cargar productos');
+    }
+  };
+
+  
   const handleCategorySubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-
-    if (!categoryForm.name) {
-      setError('Por favor, ingresa el nombre de la categoría');
-      return;
-    }
+    setError(''); setSuccess('');
+    if (!categoryForm.name) return setError('Nombre requerido');
 
     try {
-      const response = await axios.post(`${CurrentURL}categories`, { name: categoryForm.name }, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      setSuccess('¡Categoría creada exitosamente!');
+      const res = await axios.post(`${CurrentURL}categories`, { name: categoryForm.name });
+      setSuccess('Categoría creada');
       setCategoryForm({ name: '' });
-      // Actualizar la lista de categorías
-      setCategories([...categories, response.data.category]);
+      setCategories([...categories, res.data.category]);
     } catch (err) {
-      setError('Error al crear la categoría: ' + (err.response?.data?.message || err.message));
+      setError(err.response?.data?.message || err.message);
     }
+  };
+
+  
+  const handleProductSubmit = async (e) => {
+    e.preventDefault();
+    setError(''); setSuccess('');
+
+    const data = {
+      category_id: parseInt(productForm.category_id),
+      name: productForm.name,
+      description: productForm.description,
+      price: parseFloat(productForm.price),
+      stock: parseInt(productForm.stock),
+      status: productForm.status,
+      images: productForm.images.filter(url => url).map((url, i) => ({ url, position: i, alt_text: `Imagen ${i+1}` })),
+      videos: productForm.videos.filter(url => url).map((url, i) => ({ url, position: i })),
+    };
+
+    try {
+      let res;
+      if (editingProduct) {
+        res = await axios.put(`${CurrentURL}products/${editingProduct.id}`, data);
+        setSuccess('Producto actualizado');
+      } else {
+        res = await axios.post(`${CurrentURL}products`, data);
+        setSuccess('Producto creado');
+      }
+
+      setProductForm({
+        category_id: '', name: '', description: '', price: '', stock: '',
+        status: 'active', images: [''], videos: ['']
+      });
+      setEditingProduct(null);
+      fetchProducts();
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    }
+  };
+
+  
+  const handleDelete = async (id) => {
+    if (!window.confirm('¿Eliminar este producto?')) return;
+    try {
+      await axios.delete(`${CurrentURL}products/${id}`);
+      setSuccess('Producto eliminado');
+      fetchProducts();
+    } catch (err) {
+      setError('Error al eliminar');
+    }
+  };
+
+  
+  const startEdit = (product) => {
+    setEditingProduct(product);
+    setProductForm({
+      category_id: product.category_id,
+      name: product.name,
+      description: product.description || '',
+      price: product.price,
+      stock: product.stock,
+      status: product.status,
+      images: product.images?.map(i => i.url) || [''],
+      videos: product.videos?.map(v => v.url) || [''],
+    });
+    setActiveTab('create-product');
+  };
+
+  
+  const handleUrlChange = (index, type, value) => {
+    const updated = [...productForm[type]];
+    updated[index] = value;
+    setProductForm({ ...productForm, [type]: updated });
+  };
+
+  const addUrlField = (type) => {
+    setProductForm({ ...productForm, [type]: [...productForm[type], ''] });
+  };
+
+  const removeUrlField = (index, type) => {
+    setProductForm({ ...productForm, [type]: productForm[type].filter((_, i) => i !== index) });
   };
 
   return (
-    <div className="wrapperAdmin">
-      <h2 className="panelAdmin">Admin Panel</h2>
+    <div className="admin-wrapper">
+      <h2>Panel de Administración</h2>
 
-      {/* Formulario para crear categorías */}
-      <div className="formCategories">
-        <h3>Nueva Categoría</h3>
-        {error && <p className="error">{error}</p>}
-        {success && <p className="success">{success}</p>}
-        <form onSubmit={handleCategorySubmit}>
-          <div>
-            <label>Nombre de la Categoría</label>
-            <input
-              type="text"
-              name="name"
-              value={categoryForm.name}
-              onChange={handleCategoryInputChange}
-              placeholder="Nombre de la categoría"
-            />
-          </div>
-          <button type="submit">Crear Categoría</button>
-        </form>
+      
+      <div className="admin-tabs">
+        <button
+          className={activeTab === 'create-category' ? 'active' : ''}
+          onClick={() => setActiveTab('create-category')}
+        >
+          Categorías
+        </button>
+        <button
+          className={activeTab === 'create-product' ? 'active' : ''}
+          onClick={() => setActiveTab('create-product')}
+        >
+          {editingProduct ? 'Editar' : 'Crear'} Producto
+        </button>
+        <button
+          className={activeTab === 'view-products' ? 'active' : ''}
+          onClick={() => setActiveTab('view-products')}
+        >
+          Ver Productos
+        </button>
       </div>
 
-      {/* Formulario para crear productos */}
-      <div className="formProducts">
-        <h3>Productos</h3>
-        {error && <p className="error">{error}</p>}
-        {success && <p className="success">{success}</p>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Categoría</label>
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
+
+      
+      {activeTab === 'create-category' && (
+        <div className="form-section">
+          <h3>Nueva Categoría</h3>
+          <form onSubmit={handleCategorySubmit}>
+            <input
+              type="text"
+              placeholder="Nombre"
+              value={categoryForm.name}
+              onChange={(e) => setCategoryForm({ name: e.target.value })}
+            />
+            <button type="submit">Crear</button>
+          </form>
+        </div>
+      )}
+
+      
+      {activeTab === 'create-product' && (
+        <div className="form-section">
+          <h3>{editingProduct ? 'Editar' : 'Crear'} Producto</h3>
+          <form onSubmit={handleProductSubmit}>
             <select
-              name="category_id"
-              value={formData.category_id}
-              onChange={handleInputChange}
+              value={productForm.category_id}
+              onChange={(e) => setProductForm({ ...productForm, category_id: e.target.value })}
             >
-              <option value="">Seleccionar</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
+              <option value="">Seleccionar categoría</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
               ))}
             </select>
-          </div>
-          <div>
-            <label>Nombre</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="Nombre del producto"
-            />
-          </div>
-          <div>
-            <label>Descripción</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              placeholder="Descripción del producto"
-              rows="4"
-            ></textarea>
-          </div>
-          <div>
-            <label>Precio</label>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleInputChange}
-              placeholder="Precio del producto"
-              step="0.01"
-            />
-          </div>
-          <div>
-            <label>Stock</label>
-            <input
-              type="number"
-              name="stock"
-              value={formData.stock}
-              onChange={handleInputChange}
-              placeholder="Stock del producto"
-            />
-          </div>
-          <div>
-            <label>Status</label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleInputChange}
-            >
+
+            <input type="text" placeholder="Nombre" value={productForm.name}
+              onChange={(e) => setProductForm({ ...productForm, name: e.target.value })} />
+
+            <textarea placeholder="Descripción" value={productForm.description}
+              onChange={(e) => setProductForm({ ...productForm, description: e.target.value })} />
+
+            <input type="number" placeholder="Precio" step="0.01" value={productForm.price}
+              onChange={(e) => setProductForm({ ...productForm, price: e.target.value })} />
+
+            <input type="number" placeholder="Stock" value={productForm.stock}
+              onChange={(e) => setProductForm({ ...productForm, stock: e.target.value })} />
+
+            <select value={productForm.status}
+              onChange={(e) => setProductForm({ ...productForm, status: e.target.value })}>
               <option value="active">Activo</option>
               <option value="inactive">Inactivo</option>
-              <option value="out_of_stock">Out of stock</option>
+              <option value="out_of_stock">Sin stock</option>
             </select>
-          </div>
-          <div>
-            <label>Imágenes (URLs)</label>
-            {formData.images.map((url, index) => (
-              <div key={index} className="url-input">
-                <input
-                  type="text"
-                  value={url}
-                  onChange={(e) => handleUrlChange(index, 'images', e.target.value)}
-                  placeholder={`URL de imagen ${index + 1}`}
-                />
-                {formData.images.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeUrlField(index, 'images')}
-                    className="remove-url"
-                  >
-                    Eliminar
-                  </button>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => addUrlField('images')}
-              className="add-url"
-            >
-              Agregar otra imagen
-            </button>
-          </div>
-          <div>
-            <label>Videos (URLs)</label>
-            {formData.videos.map((url, index) => (
-              <div key={index} className="url-input">
-                <input
-                  type="text"
-                  value={url}
-                  onChange={(e) => handleUrlChange(index, 'videos', e.target.value)}
-                  placeholder={`URL de video ${index + 1}`}
-                />
-                {formData.videos.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeUrlField(index, 'videos')}
-                    className="remove-url"
-                  >
-                    Eliminar
-                  </button>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => addUrlField('videos')}
-              className="add-url"
-            >
-              Agregar otro video
-            </button>
-          </div>
-          <button type="submit">Guardar</button>
-        </form>
-      </div>
+
+            <div>
+              <label>Imágenes (URLs)</label>
+              {productForm.images.map((url, i) => (
+                <div key={i} className="url-input">
+                  <input
+                    type="text"
+                    value={url}
+                    onChange={(e) => handleUrlChange(i, 'images', e.target.value)}
+                    placeholder={`Imagen ${i + 1}`}
+                  />
+                  {productForm.images.length > 1 && (
+                    <button type="button" onClick={() => removeUrlField(i, 'images')}>X</button>
+                  )}
+                </div>
+              ))}
+              <button type="button" onClick={() => addUrlField('images')}>+ Imagen</button>
+            </div>
+
+            <div>
+              <label>Videos (URLs)</label>
+              {productForm.videos.map((url, i) => (
+                <div key={i} className="url-input">
+                  <input
+                    type="text"
+                    value={url}
+                    onChange={(e) => handleUrlChange(i, 'videos', e.target.value)}
+                    placeholder={`Video ${i + 1}`}
+                  />
+                  {productForm.videos.length > 1 && (
+                    <button type="button" onClick={() => removeUrlField(i, 'videos')}>X</button>
+                  )}
+                </div>
+              ))}
+              <button type="button" onClick={() => addUrlField('videos')}>+ Video</button>
+            </div>
+
+            <button type="submit">{editingProduct ? 'Actualizar' : 'Crear'}</button>
+            {editingProduct && (
+              <button type="button" onClick={() => {
+                setEditingProduct(null);
+                setProductForm({ category_id: '', name: '', description: '', price: '', stock: '', status: 'active', images: [''], videos: [''] });
+              }}>
+                Cancelar
+              </button>
+            )}
+          </form>
+        </div>
+      )}
+
+      
+      {activeTab === 'view-products' && (
+        <div className="products-list">
+          <h3>Todos los Productos</h3>
+          {products.length === 0 ? (
+            <p>No hay productos</p>
+          ) : (
+            <table className="products-table">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map(product => (
+                  <tr key={product.id}>
+                    <td>
+                      {product.images?.[0]?.url ? (
+                        <img src={product.images[0].url} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+                      ) : '-'}
+                    </td>
+                    <td>{product.name}</td>
+                    <td>${parseFloat(product.price).toFixed(2)}</td>
+                    <td>{product.stock}</td>
+                    <td>{product.status}</td>
+                    <td>
+                      <button onClick={() => startEdit(product)}>Editar</button>
+                      <button className="delete" onClick={() => handleDelete(product.id)}>Eliminar</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
     </div>
   );
 }

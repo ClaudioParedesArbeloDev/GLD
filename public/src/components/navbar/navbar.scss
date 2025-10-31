@@ -1,202 +1,261 @@
 @import '../colors/colors.scss';
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    overflow-x: hidden;
-    font-family: $font-one;
-    color: $text-color;
-    font-weight: 400;
-    line-height: 1.6;
+  overflow-x: hidden;
+  font-family: $font-one;
+  color: $text-color;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 .headerNav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    
-    background: $background-color;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $background-color;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 2rem;
 }
-
-.logoNav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-}
-
-.logoNav img {
-    width: 120px;
-    height: auto;
-}
-
-.titleEnterprise{
-    text-align: center;
-    p {
-        font-weight: 500;
-        font-size: .8rem;
-        letter-spacing: 10px;
-        color: $text-color;
-    }
-    span{
-        font-weight: 500;
-        font-size: .8rem;
-        letter-spacing: 4px;
-        color: $text-color;
-    }
-}
-
 
 nav {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    text-transform: uppercase;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 
-.nav-links li a {
+  li a {
     text-decoration: none;
     color: $text-color;
     position: relative;
     transition: all 0.3s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: $primary-color;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $primary-color;
+      transform: translateY(-2px);
+
+      &::before {
+        width: 100%;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
 }
 
-.nav-links li a::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: $primary-color;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
+.logoNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+
+  img {
+    width: 120px;
+    height: auto;
+  }
+
+  .titleEnterprise {
+    text-align: center;
+
+    p {
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 10px;
+      color: $text-color;
+    }
+
+    span {
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      color: $text-color;
+    }
+  }
 }
 
-.nav-links li a:hover,
-.nav-links li a:focus-visible {
-    color: $primary-color;
+
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+
+  &:hover {
     transform: translateY(-2px);
-}
+  }
 
-.nav-links li a:hover::before {
-    width: 100%;
-}
-
-.nav-links li a:focus-visible {
-    outline: 2px solid $primary-color;
-    outline-offset: 2px;
-    border-radius: 4px;
-}
-
-.cart {
-    font-size: 1.5rem;
+  .cart-icon {
+    width: 28px;
+    height: 28px;
+    color: $text-color;
     transition: all 0.3s ease;
+
+    &:hover {
+      color: $primary-color;
+      transform: scale(1.1);
+    }
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: $primary-color;
+    color: $background-color;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid $background-color;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    animation: pulse 1.5s infinite;
+  }
 }
 
-.cart:hover {
-    color: $primary-color;
-    transform: scale(1.2) translateY(-2px);
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
+
 
 .hamburger {
-    display: none;
-    cursor: pointer;
-    z-index: 1000;
-}
+  display: none;
+  cursor: pointer;
+  z-index: 1000;
 
-.hamburger div {
+  div {
     width: 30px;
     height: 3px;
     background: $primary-color;
     margin: 5px 0;
     transition: all 0.3s ease;
     border-radius: 2px;
+  }
 }
 
-/* Responsive */
+
 @media screen and (max-width: 800px) {
-    .hamburger {
-        display: block;
-        position: absolute;
-        right: 10%;
-        top: 50%;
-        transform: translateY(-50%);
+  .headerNav {
+    padding: 1rem;
+    position: relative;
+  }
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background: $background-color;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    clip-path: circle(50px at 90% -10%);
+    -webkit-clip-path: circle(50px at 90% -10%);
+    transition: all 1s ease-out;
+    pointer-events: none;
+    overflow: hidden;
+
+    &.open {
+      clip-path: circle(1000px at 90% -10%);
+      -webkit-clip-path: circle(1000px at 90% -10%);
+      pointer-events: all;
     }
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 100%;
-        background: $background-color;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        clip-path: circle(50px at 90% -10%);
-        -webkit-clip-path: circle(50px at 90% -10%);
-        transition: all 1s ease-out;
-        pointer-events: none;
-        overflow: hidden;
-        padding: 0;
-        margin: 0;
-    }
+    li {
+      opacity: 0;
+      transform: translateY(20px);
 
-    .nav-links.open {
-        clip-path: circle(1000px at 90% -10%);
-        -webkit-clip-path: circle(1000px at 90% -10%);
-        pointer-events: all;
-    }
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i}) {
+          transition: all 0.5s ease #{$i * 0.2}s;
+        }
+      }
 
-    .nav-links li {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    .nav-links li:nth-child(1) { transition: all 0.5s ease 0.2s; }
-    .nav-links li:nth-child(2) { transition: all 0.5s ease 0.4s; }
-    .nav-links li:nth-child(3) { transition: all 0.5s ease 0.6s; }
-    .nav-links li:nth-child(4) { transition: all 0.5s ease 0.8s; }
-    .nav-links li:nth-child(5) { transition: all 0.5s ease 1.0s; }
-
-    li.fade {
+      &.fade {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+  }
+
+  .toggle {
+    .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+    .line2 { opacity: 0; }
+    .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+  }
+
+  /* Carrito en móvil */
+  .cart-link {
+    position: absolute;
+    top: 50%;
+    right: 80px;
+    transform: translateY(-50%);
+
+    .cart-icon {
+      width: 32px;
+      height: 32px;
     }
 
-    .toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
-    .toggle .line2 { opacity: 0; }
-    .toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
-
-    .cart {
-        position: absolute;
-        top: 40%;
-        right: 130px;
+    .cart-count {
+      top: -10px;
+      right: -8px;
+      font-size: 0.7rem;
+      min-width: 20px;
+      height: 20px;
     }
+  }
 
-    .titleEnterprise{
-        display: none;
-    }
-
-    .headerNav{
-        padding: 20px;
-    }
+  .titleEnterprise {
+    display: none;
+  }
 }
